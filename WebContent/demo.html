@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Monitor Download Demo</title>
+<script type="text/javascript" src="lib/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/jquery-monitor-download.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#download-link, #download-form, #download-button').monitorDownload(
+				{
+					timeout : 5,
+					tokenName : '_downloadToken',
+					before : function() {
+						$('#msg').append('<p>Start downloading</p>');
+					},
+					after : function(isTimeout) {
+						$('#msg').append(
+								'<p>Completed, timeout:' + isTimeout + '</p>');
+					}
+				});
+	});
+</script>
+</head>
+<body>
+	<p>
+		Monitor link: <a id="download-link" href="download">Download</a>
+	</p>
+	<form id="download-form" action="download">
+		<p>
+			Monitor form: <input type="hidden" name="waitTime" value="10" /> <input type="submit" value="Submit" />
+		</p>
+	</form>
+	<form action="download">
+		<p>
+			Monitor button in a form: <input type="hidden" name="waitTime" value="10" />
+			<button id="download-button" type="submit">Download Button</button>
+		</p>
+	</form>
+	<div id="msg" style="background: #eee;"></div>
+</body>
+</html>
