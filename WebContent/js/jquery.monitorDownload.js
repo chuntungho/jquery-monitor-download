@@ -3,7 +3,7 @@
  * 
  * Note that server should return cookie with token name and value
  * 
- * @author tonyhe
+ * @author tonyho <ho@chuntung.com>
  */
 (function($) {
 	'use strict';
