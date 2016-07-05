@@ -1,5 +1,5 @@
 /**
- * Monitor file download, only support for link or form
+ * Monitor file download, recommend using jquery.cookie.js to get cookie.
  * 
  * Note that server should return cookie with token name and value
  * 
@@ -15,6 +15,10 @@
 	};
 
 	var _getCookie = function(key) {
+		if ($.cookie) {
+			return $.cookie(key);
+		}
+
 		var parts = document.cookie.split(key + '=');
 		if (parts.length == 2) {
 			var value = parts.pop().split(';').shift();
@@ -23,9 +27,9 @@
 	};
 
 	var _addToken = function(elem, tokenName, tokenValue) {
-		if (_isForm(elem)) {
+		if (_isForm(elem) || _isFormButton(elem)) {
 			// add token for form
-			var $form = $(elem);
+			var $form = _isForm(elem) ? $(elem) : _findForm($(elem));
 			var $token = $form.find('input[name=' + tokenName + ']');
 			if ($token.size() == 0) {
 				// append field if no existing
@@ -52,6 +56,18 @@
 
 	var _isForm = function(elem) {
 		return ('FORM' == elem.tagName);
+	};
+
+	var _isFormButton = function(elem) {
+		return ('BUTTON' == elem.tagName || 'INPUT' == elem.tagName);
+	};
+
+	var _findForm = function($elem) {
+		var $form = $elem.parent();
+		while ($form.size() > 0 && !_isForm($form[0])) {
+			$form = $form.parent();
+		}
+		return $form;
 	};
 
 	var _isCompleted = function(tokenName, tokenValue) {
@@ -100,7 +116,7 @@
 
 		// initialize component
 		$this.each(function(i, e) {
-			if ($.inArray(e.tagName, [ 'A', 'FORM' ]) < 0) {
+			if ($.inArray(e.tagName, [ 'A', 'FORM', 'BUTTON', 'INPUT' ]) < 0) {
 				throw 'Not support tag ' + e.tagName;
 			}
 
@@ -111,7 +127,7 @@
 	};
 
 	$.fn.monitorDownload.defaults = {
-		timeout : 30, // seconds
+		timeout : 10, // seconds
 		tokenName : 'download-token', // the cookie name
 
 		// callback
@@ -120,7 +136,7 @@
 			this.style.cursor = 'wait';
 		},
 		after : function(isTimeout) { // timeout or completed
-			_debug('call after');
+			_debug('call after ' + isTimeout);
 			this.style.cursor = 'auto';
 		}
 	};

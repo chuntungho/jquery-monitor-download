@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Monitor Download Demo</title>
 <script type="text/javascript" src="lib/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="js/jquery-monitor-download.js"></script>
+<script type="text/javascript" src="lib/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jquery.monitorDownload.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#download-link, #download-form, #download-button').monitorDownload(
@@ -28,7 +29,7 @@
 	</p>
 	<form id="download-form" action="download">
 		<p>
-			Monitor form: <input type="hidden" name="waitTime" value="10" /> <input type="submit" value="Submit" />
+			Monitor form: <input type="hidden" name="waitTime" value="5" /> <input type="submit" value="Submit" />
 		</p>
 	</form>
 	<form action="download">
