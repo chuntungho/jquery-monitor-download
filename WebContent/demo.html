@@ -5,6 +5,7 @@
 <title>Monitor Download Demo</title>
 <script type="text/javascript" src="lib/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/jquery.blockUI.js"></script>
 <script type="text/javascript" src="js/jquery.monitorDownload.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -13,11 +14,13 @@
 					timeout : 5,
 					tokenName : '_downloadToken',
 					before : function() {
+						$.blockUI();
 						$('#msg').append('<p>Start downloading</p>');
 					},
 					after : function(isTimeout) {
 						$('#msg').append(
 								'<p>Completed, timeout:' + isTimeout + '</p>');
+						$.unblockUI();
 					}
 				});
 	});
