@@ -1,10 +1,12 @@
-## jQuery monitor download plugin
+# jQuery monitor download plugin
 
-Using cookie response to monitor file download, note that this plugin should work with server side.
+Note that this plugin should work with server side.
 
-It submit a additional parameter `download-token` to server, and server should response a cookie with the same name and value. 
+It submit a additional parameter download-token to server, and server should response a cookie with the same name and same value. 
 
-### Client: 
+# Demo
+
+## Client
 
 - Monitor on link:
 
@@ -18,8 +20,9 @@ It submit a additional parameter `download-token` to server, and server should r
 
 	`$('form button').monitorDownload();`
 
-### Server:
-
-	String token = request.getParameter("download-token");
-	Cookie cookie = new Cookie("download-token", token);
-	response.addCookie(cookie);
+## Server (Java)
+```Java
+String token = request.getParameter("download-token");
+Cookie cookie = new Cookie("download-token", token);
+response.addCookie(cookie);
+```
